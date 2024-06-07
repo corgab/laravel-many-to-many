@@ -38,7 +38,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="type_id" class="form-label">Tecnologie utilizzate</label>
+            <label for="type_id" class="form-label">Tipo</label>
             <select name="type_id" id="type_id" class="form-control">
                 <option value="">Seleziona il tipo</option>
                 @foreach($types as $type)
@@ -46,6 +46,22 @@
                 @endforeach
             </select>
         </div>
+
+        <div class="d-flex gap-2 mb-3">
+            @foreach ($technologies as $technology)
+
+            {{-- @dd($technology) --}}
+            {{-- @dd($technology->technologies->pluck('id')->all()) --}}
+
+              <div class="form-check">
+                <input @checked( in_array($technology->id,  old('technologies',$project->technologies->pluck('id')->all() )) ) name="technologies[]" class="form-check-input" type="checkbox" value="{{ $technology->id }}" id="tag-{{$technology->id}}">
+                <label class="form-check-label" for="tag-{{$technology->id}}">
+                  {{ $technology->title }}
+                </label>
+              </div>
+                
+            @endforeach
+          </div>
         
         <button type="submit" class="btn btn-success btn-lg">Modifica</button>
       </form>

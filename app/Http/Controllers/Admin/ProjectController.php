@@ -76,7 +76,6 @@ class ProjectController extends Controller
 
         $new_project->technologies()->sync($form_data['technologies']);
 
-        // dd($form_data);
         return to_route('admin.projects.index', $new_project);
     }
 
@@ -97,7 +96,9 @@ class ProjectController extends Controller
 
         $types = Type::orderBy('title','asc')->get();
 
-        return view('admin.projects.edit',compact('project', 'types'));
+        $technologies = Technology::orderBy('title','asc')->get();
+
+        return view('admin.projects.edit',compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -113,11 +114,20 @@ class ProjectController extends Controller
             'end_date'=>'date',
             'project_url'=>'required|url',
             'type_id'=>'required|exists:types,id',
+            'technologies'=>'required',
         ]);
 
         $form_data = $request->all();
 
         $project->update($form_data);
+
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($request->technologies);
+        } else {
+            // l'utente non ha selezionato niente eliminiamo i collegamenti con i tags
+            $project->technologies()->detach();
+            // $post->tags()->sync([]); // fa la stessa cosa
+        }
 
         return to_route('admin.projects.index', $project);
     }
