@@ -10,6 +10,7 @@
                 <th scope="col">Data inizio</th>
                 <th scope="col">Data fine</th>
                 <th scope="col">Url Progetto</th>
+                <th scope="col">Tipo</th>
                 <th scope="col">Tecnologie</th>
             </tr>
         </thead>
@@ -22,6 +23,11 @@
                 <td>{{ $project->end_date }}</td>
                 <td>{{ $project->project_url }}</td>
                 <td>{{ optional($project->type)->title }}</td>
+                <td>
+                @foreach ($project->technologies as $technology)
+                    {{ $technology->title}}
+                @endforeach
+            </td>
             </tr>
         </tbody>
     </table>

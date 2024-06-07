@@ -31,15 +31,26 @@
         </div>
 
         <div class="mb-3">
-            <label for="type_id" class="form-label">Tecnologie utilizzate</label>
+            <label for="type_id" class="form-label">Type</label>
             <select name="type_id" id="type_id" class="form-control">
                 <option value="">Seleziona il tipo</option>
                 @foreach($types as $type)
                     <option @selected( $type->id == old('type_id') ) value="{{ $type->id }}">{{ $type->title }}</option>
                 @endforeach
             </select>
-            {{-- <input type="text" class="form-control" id="type_id" name="type_id" value="{{old('type_id')}}"> --}}
         </div>
+
+        <div class="d-flex gap-2 mb-3">
+            @foreach ($technologies as $technology)
+              <div class="form-check">
+                <input name="technologies[]" class="form-check-input" type="checkbox" value="{{ $technology->id }}" id="tag-{{$technology->id}}">
+                <label class="form-check-label" for="tag-{{$technology->id}}">
+                  {{ $technology->title }}
+                </label>
+              </div>
+                
+            @endforeach
+          </div>
         
         <button type="submit" class="btn btn-success btn-lg">Crea</button>
       </form>

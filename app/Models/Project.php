@@ -17,6 +17,7 @@ class Project extends Model
         'end_date',
         'project_url',
         'type_id',
+        // 'technologies',
     ];
 
     public function type() {

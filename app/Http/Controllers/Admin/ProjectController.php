@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -30,7 +31,9 @@ class ProjectController extends Controller
 
         $types = Type::orderBy('title','asc')->get();
 
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::orderBy('title','asc')->get();
+
+        return view('admin.projects.create', compact('types','technologies'));
     }
 
     /**
@@ -38,6 +41,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required|max:150|string',
             'description'=>'max:65000',
@@ -45,6 +49,7 @@ class ProjectController extends Controller
             'end_date'=>'date',
             'project_url'=>'required|url|unique:projects',
             'type_id'=>'required|exists:types,id',
+            'technologies'=>'required',
             
         ]);
 
@@ -69,6 +74,9 @@ class ProjectController extends Controller
 
         $new_project = Project::create($form_data);
 
+        $new_project->technologies()->sync($form_data['technologies']);
+
+        // dd($form_data);
         return to_route('admin.projects.index', $new_project);
     }
 

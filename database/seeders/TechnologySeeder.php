@@ -14,7 +14,6 @@ class TechnologySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('projects')->truncate();
 
         $technologies = ['css','js','vue','sql','php','laravel'];
 
