@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->foreignId('type_id')->constrained();
+
+            // 1. aggiungendo la colonna
+            $table->unsignedBigInteger('type_id')->nullable()->after('id');
+            // 2. definendo il vincolo di relazione tra le colonne delle tabelle
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
         });
     }
 

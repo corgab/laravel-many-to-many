@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             TypeSeeder::class,
-            Technology::class,
+            TechnologySeeder::class,
             UserSeeder::class,
             ProjectSeeder::class
         ]);

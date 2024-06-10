@@ -17,7 +17,7 @@ class ProjectSeeder extends Seeder
     public function run(Faker $faker): void
     {
 
-        DB::table('projects')->truncate();
+        // DB::table('projects')->truncate();
 
         for ($i = 0; $i < 10; $i++) {
 
